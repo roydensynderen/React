@@ -1,14 +1,14 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { ProductsContext } from '../../context/products-context';
-// import { CartContext } from '../../context/cart-context';
-// import { isInCart } from '../../helpers';
+import { CartContext } from '../../context/cart-context';
+import { isInCart } from '../../helpers';
 import Layout from '../shared/layout';
 import './single-product.scss';
 
 const SingleProduct = ({ match, history: { push } }) => {
   const { products } = useContext(ProductsContext);
-  // const { addProduct, cartItems, increase } = useContext(CartContext);
+  const { addProduct, cartItems, increase } = useContext(CartContext);
   const { id } = match.params;
   const [product, setProduct] = useState(null);
 
@@ -26,7 +26,7 @@ const SingleProduct = ({ match, history: { push } }) => {
   // while we check for product
   if (!product) { return null }
   const { imageUrl, title, price, description } = product;
-  // const itemInCart = isInCart(product, cartItems);
+  const itemInCart = isInCart(product, cartItems);
 
   return (
     <Layout>
@@ -39,7 +39,7 @@ const SingleProduct = ({ match, history: { push } }) => {
             <h3>{title}</h3>
             <p>{price}</p>
           </div>
-          {/* <div className='add-to-cart-btns'>
+          <div className='add-to-cart-btns'>
             {
               !itemInCart &&
               <button 
@@ -62,7 +62,7 @@ const SingleProduct = ({ match, history: { push } }) => {
             <button className='button is-black nomad-btn' id='btn-white-outline'>
               PROCEED TO CHECKOUT
             </button>
-          </div> */}
+          </div>
           <div className='product-description'>
             <p>
               { description }
